@@ -461,8 +461,13 @@ class BaseModel
         $obj = static::first($params, $companyId);
         if($obj)
             return $obj;
-
-        throw new AnfixException("No se ha encontrado ningún objeto {$obj->Model} con los parámetros indicados");
+	
+	if (isset($obj->Model)) {
+            $objName = $obj->Model;
+        } else {
+            $objName = get_called_class();
+        }
+        throw new AnfixException("No se ha encontrado ningún objeto {$objName} con los parámetros indicados");
     }
     
    /**
